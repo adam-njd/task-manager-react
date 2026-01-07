@@ -1,0 +1,82 @@
+import * as React from 'react';
+import PropTypes from 'prop-types';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Box from '@mui/material/Box';
+import UnDoneTasks from './DoneTasks.jsx';
+import TaskComponent from './TaskComponent.jsx';
+import { AllTasksProvider } from '../context/Alltasks.jsx';
+import DoneTaskComponent from './DoneTasks.jsx';
+import All from './All.jsx';
+import AddTask from './AddTask.jsx';
+
+function CustomTabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+
+    <div
+        style={{display:'flex',justifyContent:'center'}}
+        role="tabpanel"
+        hidden={value !== index}
+        id={`simple-tabpanel-${index}`}
+        aria-labelledby={`simple-tab-${index}`}
+        {...other}
+    >
+      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+    </div>
+
+  );
+}
+
+CustomTabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired,
+};
+
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`,
+  };
+}
+
+export default function BasicTabs({children}) {
+  const [value, setValue] = React.useState(0);
+  const [tapID,setTapId] = React.useState(0);
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+    console.log('the value is ' ,value)
+    
+  };
+    
+  return (
+    // <AllTasksProvider>
+    <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' , backgroundColor:'#fff'}} >
+      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+          <Tab label="Undone" onClick={()=>setTapId(0)} {...a11yProps(0)}/>
+          <Tab label="Done" onClick={()=>setTapId(1)} {...a11yProps(1)} />
+          <Tab label="All" onClick={()=>setTapId(2)} {...a11yProps(2)} />
+        </Tabs>
+      </Box>
+      <CustomTabPanel value={value} index={0} >
+        
+                <TaskComponent/>
+
+      </CustomTabPanel>
+
+      <CustomTabPanel value={value} index={1}>
+
+            <DoneTaskComponent/>
+
+      </CustomTabPanel>
+      <CustomTabPanel value={value} index={2}>
+       <All/>
+      </CustomTabPanel>
+      <AddTask tapID={tapID} />
+    </Box>
+    // </AllTasksProvider>
+  );
+}
