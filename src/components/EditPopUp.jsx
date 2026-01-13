@@ -1,59 +1,67 @@
-// 
 import * as React from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { UseAllTasks } from '../context/Alltasks';
 
-export default function FormDialog() {
-  const { clicked, setIsClicked } = UseAllTasks();
+export default function FormDialog({ task }) {
+  const { handleEditButton } = UseAllTasks();
+  const [open, setOpen] = React.useState(false);
+  const [newTask, setNewTask] = React.useState({ title: '' });
+  const iconStyle = {
+  width: 40,
+  height: 40,
+  borderRadius: '50%',
+  cursor: 'pointer',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  transition: '0.3s',
+  '&:hover': {
+    transform: 'scale(1.1)',
+    opacity: 0.9,
+  },
+};
+  React.useEffect(() => {
+    if (task) setNewTask(task);
+  }, [task]);
 
-  console.log("clicked in dialog is", clicked);
-
-  const handleClose = () => {
-    setIsClicked(false); // 👈 سكّر الـ Dialog من الـ Context
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-    const formJson = Object.fromEntries(formData.entries());
-    console.log(formJson.title);
-    handleClose();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!newTask.title) return;
+    handleEditButton(newTask.id, newTask.title);
+    setOpen(false);
   };
 
   return (
-    <Dialog open={clicked} onClose={handleClose}>
-      <DialogTitle>Edit Task</DialogTitle>
+    <>
+      <EditOutlinedIcon
+        onClick={() => setOpen(true)}
+        style={iconStyle}
+      />
 
-      <DialogContent>
-        <DialogContentText>
-          Edit your task title
-        </DialogContentText>
-
-        <form onSubmit={handleSubmit} id="edit-form">
+      <Dialog open={open} onClose={() => setOpen(false)}>
+        <DialogTitle>Edit Task</DialogTitle>
+        <DialogContent>
           <TextField
             autoFocus
-            required
-            margin="dense"
-            name="title"
-            label="Task title"
             fullWidth
             variant="standard"
+            value={newTask.title}
+            onChange={(e) =>
+              setNewTask({ ...newTask, title: e.target.value })
+            }
           />
-        </form>
-      </DialogContent>
-
-      <DialogActions>
-        <Button onClick={handleClose}>Cancel</Button>
-        <Button type="submit" form="edit-form">
-          Save
-        </Button>
-      </DialogActions>
-    </Dialog>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleSubmit}>Done</Button>
+          <Button onClick={() => setOpen(false)}>Cancel</Button>
+        </DialogActions>
+      </Dialog>
+    </>
   );
 }

@@ -9,29 +9,28 @@ import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutli
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import _default from "@emotion/styled";
+import FormDialogD from "./FormDialogDelete";
 // function handleDelete(index) {   const {tasks, setTasks} = UseAllTasks();
 // const newTasks = tasks.filter((_, i) => i !== index);   setTasks(newTasks); }
 
-
 export default function DoneTaskComponent() {
-  const { tasks,handleDeleteButton,} = UseAllTasks();
- let TasksReadyToShow=[]
-  useEffect(() => {
-    console.log('Tasks updated:', tasks);
-  }, [tasks]),TasksReadyToShow;
-   TasksReadyToShow=tasks.filter(task=>task.isDone)
+  const {tasks, handleDeleteButton, clicked, handleRestorButton} = UseAllTasks();
+  let TasksReadyToShow = []
+    useEffect(() => {
+      console.log('Tasks updated:', tasks);
+    }, [tasks, clicked]),
+    TasksReadyToShow;
+    TasksReadyToShow = tasks.filter(task => task.isDone)
+    function handleReStore(id) {}
+    console.log("the filterd arr", TasksReadyToShow)
+    return ( <> {
+      TasksReadyToShow.map((task) => {
 
- console.log("the filterd arr" ,TasksReadyToShow)
-  return (
-    <>
-      {TasksReadyToShow.map((task) =>{
-
-            return(
-        <Container
-
-          key={task.id}
-          id={task.id}
-          style={{
+        return (
+          <Container
+            key={task.id}
+            id={task.id}
+            style={{
             display: 'flex',
             justifyContent: 'space-between',
             width: '100%',
@@ -40,24 +39,47 @@ export default function DoneTaskComponent() {
             borderRadius: '8px',
             padding: '20px',
             marginBottom: '10px',
-            boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-          }}
-        >
-          <h2 style={{overflowWrap: 'anywhere'}}>{task.title}</h2>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
-            {/* <CheckCircleOutlineOutlinedIcon
+            boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)'
+          }}>
+            <h2 style={{
+              overflowWrap: 'anywhere'
+            }}>{task.title}</h2>
+            <div
+              style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'flex-end'
+            }}>
+              {/* <CheckCircleOutlineOutlinedIcon
               style={{ cursor: 'pointer' }}
               onClick={() => handleDoneButton(task.id)}
             /> */}
-            <DeleteOutlineOutlinedIcon onClick={()=>handleDeleteButton(task.id)} style={{ color: 'red', cursor: 'pointer' }} />
-            <SettingsBackupRestoreIcon style={{cursor:'pointer', marginLeft:'5px',marginRight:'5px'}} />
-          </div>
-        </Container>
-      )})}
-    </>
+              <FormDialogD task={task}/>
+              <SettingsBackupRestoreIcon
+                sx={{
+                p: '2px',
+                cursor: 'pointer',
+                mx: '5px',
+                width: '40px',
+                height: '40px',
+                fontSize: 'smaller',
+                backgroundColor: '#000',
+                borderRadius: '50%',
+                color: 'white',
+                minWidth: 0,
+                '&:hover': {
+                  backgroundColor: '#000'
+                }
+              }}
+                onClick={() => handleRestorButton(task.id)}/>
+            </div>
+          </Container>
+        )
+      })
+    } </>
   );
 }
 
 
 
-// i have to style  tasks icons  
+// i have to style  tasks icons

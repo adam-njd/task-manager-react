@@ -16,12 +16,13 @@ function CustomTabPanel(props) {
   return (
 
     <div
-        style={{display:'flex',justifyContent:'center'}}
+        style={{display:'flex',justifyContent:'center',marginBottom:'20px'}}
         role="tabpanel"
         hidden={value !== index}
         id={`simple-tabpanel-${index}`}
         aria-labelledby={`simple-tab-${index}`}
         {...other}
+      
     >
       {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
     </div>
@@ -53,30 +54,33 @@ export default function BasicTabs({children}) {
     
   return (
     // <AllTasksProvider>
+    <>
     <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' , backgroundColor:'#fff'}} >
-      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+      <Box sx={{ borderBottom: '1px #000 solid', borderColor: 'divider', boxShadow:'inner' }}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
           <Tab label="Undone" onClick={()=>setTapId(0)} {...a11yProps(0)}/>
           <Tab label="Done" onClick={()=>setTapId(1)} {...a11yProps(1)} />
           <Tab label="All" onClick={()=>setTapId(2)} {...a11yProps(2)} />
         </Tabs>
       </Box>
-      <CustomTabPanel value={value} index={0} >
+      <CustomTabPanel value={value} index={0} style={{overflowY:'scroll', maxHeight:'80vh',border:'solid 1px #00000042' , borderRadius:'8px' , marginTop:'20px'}}>
         
                 <TaskComponent/>
 
       </CustomTabPanel>
 
-      <CustomTabPanel value={value} index={1}>
+      <CustomTabPanel value={value} index={1} style={{overflowY:'scroll', maxHeight:'80vh', marginTop:'20px'}}>
 
             <DoneTaskComponent/>
 
       </CustomTabPanel>
-      <CustomTabPanel value={value} index={2}>
+      <CustomTabPanel value={value} index={2} style={{overflowY:'scroll', maxHeight:'80vh', marginTop:'20px'}}>
        <All/>
       </CustomTabPanel>
-      <AddTask tapID={tapID} />
+      
     </Box>
+    <AddTask tapID={tapID} />
+    </>
     // </AllTasksProvider>
   );
 }

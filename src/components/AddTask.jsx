@@ -1,52 +1,59 @@
-import {useState} from "react";
-import { UseAllTasks } from "../context/Alltasks";
-  import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-export default function AddTask({tapID}) {
-  const [newTask,setNewTask] = useState("")
-  const {handleAddButton} = UseAllTasks();
 
+import { useState } from "react";
+import { UseAllTasks } from "../context/Alltasks";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+
+export default function AddTask({ tapID }) {
+  const [newTask, setNewTask] = useState("");
+  const { handleAddButton } = UseAllTasks();
+
+  const handleAdd = () => {
+    if (!newTask.trim()) return;
+    handleAddButton(newTask);
+    setNewTask("");
+  };
 
   return (
-    <div style={tapID===0?{
-      display: "flex",
-      justifyContent: "center"
-    }:{display:'none'}}>
-
-          <Box
-      component="form"
-      sx={{ '& .MuiTextField-root': { m: 1, width: '25ch' } }}
-      noValidate
-      autoComplete="off"
+    <div
+      style={
+        tapID === 0
+          ? { display: "flex", justifyContent: "center" }
+          : { display: "none" }
+      }
     >
-      <div>
+      <Box
+        component="form"
+        sx={{
+          display: "flex",
+          gap: 1,
+          alignItems: "stretch", 
+          '& .MuiTextField-root': { flex: 1 }, 
+          mt:"20px"
+        }}
+        noValidate
+        autoComplete="off"
+      >
         <TextField
           id="outlined-multiline-flexible"
-          label="Multiline"
+          label="Add Task"
           multiline
           maxRows={4}
-          style={{Color:'white' , borderRadius:'10px'}}
           value={newTask}
-          onChange={(e) => {
-        setNewTask(e.target.value);
-    
-    }}
+          onChange={(e) => setNewTask(e.target.value)}
         />
-    
-      </div>
-    </Box>
-      <button onClick={() => {
-        //  if (!newTask.trim()) return;
-          handleAddButton(newTask);
-          setNewTask("");
-      }}>"Add"</button>
+
+        <Button
+          variant="contained"
+          onClick={handleAdd}
+          sx={{ height: "100%" }} 
+          disabled={newTask.length==0}
+        >
+          Add
+        </Button>
+      </Box>
     </div>
-  )
-
+  );
 }
-
-
-
-////////
-
 

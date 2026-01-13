@@ -10,23 +10,56 @@ import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutli
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import _default from "@emotion/styled";
+import SimpleDialog from "./EditPopUp";
+import SimpleDialogDemo from "./EditPopUp";
+import FormDialog from "./EditPopUp";
+import { ThemeProvider } from "@emotion/react";
+import { createTheme } from "@mui/material/styles";
+import Alert from "@mui/material/Alert";
+import Snackbar from "@mui/material/Snackbar";
+import DeletePopUp from "./EditPopUp";
+import FormDialogD from "./FormDialogDelete";
 // function handleDelete(index) {   const {tasks, setTasks} = UseAllTasks();
 // const newTasks = tasks.filter((_, i) => i !== index);   setTasks(newTasks); }
 
-
 export default function DoneTaskComponent() {
-  const { tasks, handleDoneButton,handleDeleteButton ,handleEditButton,clicked} = UseAllTasks();
+   const theme=createTheme({
+          palette:{
+              primary:{
+                  main:"rgba(61, 115, 230, 0.87)"
+              }
+          }
+      });
+      const iconStyle = {
+  width: 40,
+  height: 40,
+  borderRadius: '50%',
+  cursor: 'pointer',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  transition: '0.3s',
+  '&:hover': {
+    transform: 'scale(1.1)',
+    opacity: 0.9,
+  },
+};
+  const { tasks, handleDoneButton,open,handleDeleteButton,wantEdit} = UseAllTasks();
  const TasksReadyToShow=tasks.filter(task=>!task.isDone)
   useEffect(() => {
-    console.log('Tasks updated:', tasks);
-  }, [tasks,clicked]);
+    console.log('Tasks wantEdit:', wantEdit);
+  }, [tasks,wantEdit]);
 
 
- console.log("the filterd arr" ,TasksReadyToShow)
+ console.log('open',open)
   return (
     <>
+    <ThemeProvider theme={theme}>
+      
       {TasksReadyToShow.map((task) =>{
-
+        
+       
+console.log(" wantEdit " ,task.wantEdit)
             return(
         <Container
           key={task.id}
@@ -35,26 +68,46 @@ export default function DoneTaskComponent() {
             display: 'flex',
             justifyContent: 'space-between',
             width: '100%',
-           
             gap: '5px',
             border: '1px solid #ccc',
             borderRadius: '8px',
             padding: '10px',
             marginBottom: '10px',
             boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+            backgroundColor:'primary impotant!'
           }}
         >
-          <h2 style={{overflowWrap: 'anywhere', maxWidth:'80%'}}>{task.title}</h2>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
+         <h2
+            style={{
+            overflowWrap: 'anywhere',
+            maxWidth: '80%'
+          }}>{task.title}</h2>
+          <div
+            style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'flex-end',
+            flexDirection:'row'
+          }}>
+            <div style={{display:'flex', flexDirection:'row',alignItems:'center'}}>
             <CheckCircleOutlineOutlinedIcon
-              style={{ cursor: 'pointer' }}
+              style={iconStyle}
               onClick={() => handleDoneButton(task.id)}
-            />
-            <DeleteOutlineOutlinedIcon onClick={()=>handleDeleteButton(task.id)} style={{ color: 'red', cursor: 'pointer' }} />
-            <EditOutlinedIcon style={{ cursor: 'pointer' }} onClick={()=>{handleEditButton(task.id)}}/>
+              />
+            
+            <FormDialogD task={task}/>
+            
+
+            <FormDialog task={task}></FormDialog>
+              
+              </div>
           </div>
+            
         </Container>
+        
       )})}
+      </ThemeProvider>
+      
     </>
   );
 }
