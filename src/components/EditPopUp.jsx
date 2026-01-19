@@ -6,10 +6,10 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import { UseAllTasks } from '../context/Alltasks';
+import { useAllTasks} from '../context/Alltasks';
 
 export default function FormDialog({ task }) {
-  const { handleEditButton } = UseAllTasks();
+  const { handleEditButton } = useAllTasks();
   const [open, setOpen] = React.useState(false);
   const [newTask, setNewTask] = React.useState({ title: '' });
   const iconStyle = {

@@ -1,6 +1,6 @@
 import Container from "@mui/material/Container";
 import {AllTasksProvider} from "../context/Alltasks";
-import {UseAllTasks} from "../context/Alltasks";
+import {useAllTasks} from "../context/Alltasks";
 import {useEffect, useState} from "react";
 import {uuidv7} from "uuidv7";
 import SettingsBackupRestoreIcon from '@mui/icons-material/SettingsBackupRestore';
@@ -10,11 +10,11 @@ import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import _default from "@emotion/styled";
 import FormDialogD from "./FormDialogDelete";
-// function handleDelete(index) {   const {tasks, setTasks} = UseAllTasks();
+// function handleDelete(index) {   const {tasks, setTasks} = useAllTasks();
 // const newTasks = tasks.filter((_, i) => i !== index);   setTasks(newTasks); }
 
 export default function DoneTaskComponent() {
-  const {tasks, handleDeleteButton, clicked, handleRestorButton} = UseAllTasks();
+  const {tasks, handleDeleteButton, clicked, handleRestorButton} = useAllTasks();
   let TasksReadyToShow = []
     useEffect(() => {
       console.log('Tasks updated:', tasks);

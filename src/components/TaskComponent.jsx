@@ -1,6 +1,6 @@
 import Container from "@mui/material/Container";
 import {AllTasksProvider} from "../context/Alltasks";
-import {UseAllTasks} from "../context/Alltasks";
+import {useAllTasks} from "../context/Alltasks";
 import {useEffect, useState} from "react";
 import {uuidv7} from "uuidv7";
 
@@ -19,7 +19,7 @@ import Alert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
 import DeletePopUp from "./EditPopUp";
 import FormDialogD from "./FormDialogDelete";
-// function handleDelete(index) {   const {tasks, setTasks} = UseAllTasks();
+// function handleDelete(index) {   const {tasks, setTasks} = useAllTasks();
 // const newTasks = tasks.filter((_, i) => i !== index);   setTasks(newTasks); }
 
 export default function DoneTaskComponent() {
@@ -44,7 +44,7 @@ export default function DoneTaskComponent() {
     opacity: 0.9,
   },
 };
-  const { tasks, handleDoneButton,open,handleDeleteButton,wantEdit} = UseAllTasks();
+  const { tasks, handleDoneButton,open,handleDeleteButton,wantEdit} = useAllTasks();
  const TasksReadyToShow=tasks.filter(task=>!task.isDone)
   useEffect(() => {
     console.log('Tasks wantEdit:', wantEdit);

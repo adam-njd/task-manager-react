@@ -7,11 +7,11 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import { UseAllTasks } from '../context/Alltasks';
+import { useAllTasks} from '../context/Alltasks';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 export default function FormDialogD({ task }) {
-  const { handleDeleteButton } = UseAllTasks();
+  const { handleDeleteButton } = useAllTasks();
 const iconStyle = {
   width: 40,
   height: 40,
@@ -38,7 +38,13 @@ const iconStyle = {
   const handleSubmit = (e) => {
     e.preventDefault();
     
-    handleDeleteButton(task.id);
+     handleDeleteButton(task.id);
+    setOpen(false);
+  };
+  const handleCancel = (e) => {
+    //  e.preventDefault();
+    
+    
     setOpen(false);
   };
 
@@ -46,7 +52,7 @@ const iconStyle = {
 
   return (
     <>
-      <div onClick={() => setOpen(true)}>
+      <div >
      
       
 
@@ -61,7 +67,7 @@ const iconStyle = {
 
         <DialogActions>
           <Button onClick={handleSubmit}>Delete</Button>
-          <Button onClick={() => setOpen(false)}>Cancel</Button>
+          <Button onClick={() => handleCancel()}>Cancel</Button>
         </DialogActions>
       </Dialog>
          <DeleteOutlineOutlinedIcon

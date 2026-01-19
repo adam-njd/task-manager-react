@@ -1,13 +1,13 @@
 
 import { useState } from "react";
-import { UseAllTasks } from "../context/Alltasks";
+import { useAllTasks} from "../context/Alltasks";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 
 export default function AddTask({ tapID }) {
   const [newTask, setNewTask] = useState("");
-  const { handleAddButton } = UseAllTasks();
+  const { handleAddButton } = useAllTasks();
 
   const handleAdd = () => {
     if (!newTask.trim()) return;

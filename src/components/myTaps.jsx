@@ -63,18 +63,18 @@ export default function BasicTabs({children}) {
           <Tab label="All" onClick={()=>setTapId(2)} {...a11yProps(2)} />
         </Tabs>
       </Box>
-      <CustomTabPanel value={value} index={0} style={{overflowY:'scroll', maxHeight:'80vh',border:'solid 1px #00000042' , borderRadius:'8px' , marginTop:'20px'}}>
+      <CustomTabPanel value={value} index={0} style={{overflowY:'scroll', maxHeight:'60vh',border:'solid 1px #00000042' , borderRadius:'8px' , marginTop:'20px'}}>
         
                 <TaskComponent/>
 
       </CustomTabPanel>
 
-      <CustomTabPanel value={value} index={1} style={{overflowY:'scroll', maxHeight:'80vh', marginTop:'20px'}}>
+      <CustomTabPanel value={value} index={1} style={{overflowY:'scroll', maxHeight:'60vh', marginTop:'20px'}}>
 
             <DoneTaskComponent/>
 
       </CustomTabPanel>
-      <CustomTabPanel value={value} index={2} style={{overflowY:'scroll', maxHeight:'80vh', marginTop:'20px'}}>
+      <CustomTabPanel value={value} index={2} style={{overflowY:'scroll', maxHeight:'60vh', marginTop:'20px'}}>
        <All/>
       </CustomTabPanel>
       
